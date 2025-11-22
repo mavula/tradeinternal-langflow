@@ -17,7 +17,6 @@ ExecStart=/usr/bin/docker run \
   --name langflow \
   -p 7860:7860 \
   -v langflow_data:/var/lib/langflow \
-  -v /opt/mcp:/opt/mcp \
   langflowai/langflow:latest
 
 # Stop container cleanly
