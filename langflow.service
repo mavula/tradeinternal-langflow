@@ -1,0 +1,27 @@
+[Unit]
+Description=Langflow (Docker)
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+
+# Clean up old container
+ExecStartPre=-/usr/bin/docker stop langflow
+ExecStartPre=-/usr/bin/docker rm langflow
+
+# Start Langflow with volumes
+ExecStart=/usr/bin/docker run \
+  --name langflow \
+  -p 7860:7860 \
+  -v langflow_data:/var/lib/langflow \
+  -v /opt/mcp:/opt/mcp \
+  langflowai/langflow:latest
+
+# Stop container cleanly
+ExecStop=/usr/bin/docker stop langflow
+
+[Install]
+WantedBy=multi-user.target
